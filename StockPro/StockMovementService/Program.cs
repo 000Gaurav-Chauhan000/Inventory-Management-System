@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(options =>
 
 
 builder.Services.AddDbContext<MovementDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddScoped<IMovementRepository, MovementRepository>();
@@ -70,8 +70,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 var app = builder.Build();
+
+app.UseCors("AllowReact");
 app.UseSwagger();
 app.UseSwaggerUI();
 

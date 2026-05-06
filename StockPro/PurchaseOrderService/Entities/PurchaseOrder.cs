@@ -29,4 +29,5 @@ public class PurchaseOrder
     public string? Notes { get; set; }
 
     public string? ReferenceNumber { get; set; }
+    public List<POLineItem> Items { get; set; } = new();
 }

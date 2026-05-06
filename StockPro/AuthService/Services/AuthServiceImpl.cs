@@ -55,7 +55,7 @@ public class AuthServiceImpl : IAuthService
             Email = request.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             Phone = request.Phone,
-            Role = request.Role,
+            Role = request.Role?.ToUpper() ?? "STAFF",
             Department = request.Department,
             IsActive = true,
             CreatedAt = DateTime.UtcNow
@@ -66,6 +66,20 @@ public class AuthServiceImpl : IAuthService
 
         return "User registered successfully";
     }
+
+    private static Claim[] BuildTokenClaims(AppUser user)
+    {
+        return
+        [
+            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            // Include both claim styles so every downstream service can authorize consistently.
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("role", user.Role)
+        ];
+    }
+
+
 
     //Login
     public async Task<string> LoginAsync(LoginRequest request)
@@ -87,27 +101,8 @@ public class AuthServiceImpl : IAuthService
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
-
-        var keyString = _config["Jwt:Key"] ?? throw new Exception("JWT Key missing");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
-
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"],
-            audience: _config["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
-            signingCredentials: creds
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var claims = BuildTokenClaims(user);
+        return GenerateJwtToken(claims);
     }
 
     //Logout
@@ -119,61 +114,33 @@ public class AuthServiceImpl : IAuthService
     // Validate Token
     public bool ValidateToken(string token)
     {
-        var handler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
-
-        try
-        {
-            handler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = _config["Jwt:Issuer"],
-                ValidAudience = _config["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(key)
-            }, out _);
-
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        try { ValidateAndGetPrincipal(token); return true; } catch { return false; }
     }
 
     // Refresh Token
     public string RefreshToken(string token)
     {
-        if (!ValidateToken(token))
+        var principal = ValidateAndGetPrincipal(token);
+        if (principal == null)
             throw new UnauthorizedAccessException("Invalid token");
 
-        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-
-        var userId = jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-        var email = jwtToken.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-        var role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+        var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value 
+                     ?? throw new UnauthorizedAccessException("UserId claim missing");
+        var email = principal.FindFirst(ClaimTypes.Email)?.Value 
+                     ?? throw new UnauthorizedAccessException("Email claim missing");
+        var role = principal.FindFirst(ClaimTypes.Role)?.Value 
+                     ?? principal.FindFirst("role")?.Value
+                     ?? throw new UnauthorizedAccessException("Role claim missing");
 
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, userId),
             new Claim(ClaimTypes.Email, email),
-            new Claim(ClaimTypes.Role, role)
+            new Claim(ClaimTypes.Role, role),
+            new Claim("role", role)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var newToken = new JwtSecurityToken(
-            issuer: _config["Jwt:Issuer"],
-            audience: _config["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
-            signingCredentials: creds
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(newToken);
+        return GenerateJwtToken(claims);
     }
 
     // Get User By Id
@@ -258,5 +225,34 @@ public class AuthServiceImpl : IAuthService
     {
         var users = await _context.Users.ToListAsync();
         return users.Select(MapToDto).ToList();
+    }
+    private string GenerateJwtToken(IEnumerable<Claim> claims)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(2),
+            signingCredentials: creds
+        );
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    private ClaimsPrincipal ValidateAndGetPrincipal(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]!);
+        return handler.ValidateToken(token, new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = _config["Jwt:Issuer"],
+            ValidAudience = _config["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        }, out _);
     }
 }

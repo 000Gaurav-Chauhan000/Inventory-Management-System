@@ -14,8 +14,12 @@ public class AuthDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AppUser>()
-            .HasIndex(u => u.Email)
+        modelBuilder.HasDefaultSchema("auth");
+        base.OnModelCreating(modelBuilder);
+
+        var user = modelBuilder.Entity<AppUser>();
+
+        user.HasIndex(u => u.Email)
             .IsUnique();
     }
 }

@@ -1,11 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace AuthService.Entities;
 
 public class AppUser
 {
-    
     [Key]
     public Guid UserId { get; set; }
 

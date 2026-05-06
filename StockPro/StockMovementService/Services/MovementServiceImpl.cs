@@ -48,7 +48,7 @@ public class MovementServiceImpl : IMovementService
             Notes = dto.Notes,
             MovementDate = DateTime.UtcNow,
             PerformedBy = performedBy,
-            BalanceAfter = 0
+            BalanceAfter = dto.BalanceAfter
         };
 
         await _repository.AddAsync(movement);

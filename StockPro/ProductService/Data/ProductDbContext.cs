@@ -11,6 +11,7 @@ public class ProductDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("product");
         modelBuilder.Entity<Product>()
             .HasIndex(p => p.Sku)
             .IsUnique();

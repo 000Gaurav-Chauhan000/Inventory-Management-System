@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5119
+          "Host": "auth-service-7x5q.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
@@ -14,11 +14,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/products/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5212
+          "Host": "product-service-qxia.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/products/{everything}",
@@ -26,11 +26,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/warehouses/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5019
+          "Host": "warehouse-service-f2au.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/warehouses/{everything}",
@@ -38,11 +38,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/stock/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5019
+          "Host": "warehouse-service-f2au.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/stock/{everything}",
@@ -50,11 +50,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/suppliers/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5230
+          "Host": "supplier-service-316x.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/suppliers/{everything}",
@@ -62,11 +62,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/purchase-orders/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5189
+          "Host": "purchase-order-service.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/purchase-orders/{everything}",
@@ -74,11 +74,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/movements/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5121
+          "Host": "movement-service.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/movements/{everything}",
@@ -86,11 +86,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/alerts/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5245
+          "Host": "alert-service-x1vl.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/alerts/{everything}",
@@ -98,11 +98,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/reports/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5144
+          "Host": "report-service-w2ue.onrender.com",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/api/reports/{everything}",
@@ -110,6 +110,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "https://stockpro-gateway.onrender.com"
   }
 }

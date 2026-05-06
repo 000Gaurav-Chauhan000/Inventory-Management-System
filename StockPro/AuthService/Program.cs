@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
 
 // DB
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // DI
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
@@ -62,26 +62,29 @@ builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var key = builder.Configuration["Jwt:Key"] 
-                  ?? throw new Exception("JWT Key not found");
-
+        var key = builder.Configuration["Jwt:Key"] ?? throw new Exception("JWT Key not found");
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(key))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
         };
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseCors("AllowReact");
 
 app.UseSwagger();
 app.UseSwaggerUI();

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StockMovementService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+290b98e8adfc80327494adcdc22387619f5a16f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63d932d12115ad469713caa7ebe72634c99c0f55")]
 [assembly: System.Reflection.AssemblyProductAttribute("StockMovementService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StockMovementService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
