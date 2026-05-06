@@ -1,0 +1,120 @@
+services:
+  # API Gateway (Public Web Service)
+  - type: web
+    name: stockpro-gateway
+    runtime: docker
+    dockerContext: StockPro/ApiGateway
+    dockerfilePath: StockPro/ApiGateway/Dockerfile
+    plan: free
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  # Microservices
+  - type: web
+    name: auth-service
+    runtime: docker
+    dockerContext: StockPro/AuthService
+    dockerfilePath: StockPro/AuthService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: product-service
+    runtime: docker
+    dockerContext: StockPro/ProductService
+    dockerfilePath: StockPro/ProductService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: Services__WarehouseService
+        value: https://warehouse-service-f2au.onrender.com
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: warehouse-service
+    runtime: docker
+    dockerContext: StockPro/WarehouseService
+    dockerfilePath: StockPro/WarehouseService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: supplier-service
+    runtime: docker
+    dockerContext: StockPro/SupplierService
+    dockerfilePath: StockPro/SupplierService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: purchase-order-service
+    runtime: docker
+    dockerContext: StockPro/PurchaseOrderService
+    dockerfilePath: StockPro/PurchaseOrderService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: Services__WarehouseService
+        value: https://warehouse-service-f2au.onrender.com
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: movement-service
+    runtime: docker
+    dockerContext: StockPro/StockMovementService
+    dockerfilePath: StockPro/StockMovementService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: alert-service
+    runtime: docker
+    dockerContext: StockPro/AlertService
+    dockerfilePath: StockPro/AlertService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: WarehouseService__BaseUrl
+        value: https://warehouse-service-f2au.onrender.com
+      - key: ProductService__BaseUrl
+        value: https://product-service-qxia.onrender.com
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
+
+  - type: web
+    name: report-service
+    runtime: docker
+    dockerContext: StockPro/ReportService
+    dockerfilePath: StockPro/ReportService/Dockerfile
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        value: "Host=dpg-d7t1kdv7f7vs73dgjuvg-a.ohio-postgres.render.com;Port=5432;Database=stockpro_db_h4wv;Username=stockpro_user;Password=lt4tX1BWS8LoCdykbMNmKrRYM7LGQWkS;Pooling=true;TrustServerCertificate=true;"
+      - key: WarehouseService__BaseUrl
+        value: https://warehouse-service-f2au.onrender.com
+      - key: ProductService__BaseUrl
+        value: https://product-service-qxia.onrender.com
+      - key: ASPNETCORE_URLS
+        value: http://*:8080
