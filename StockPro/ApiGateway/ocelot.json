@@ -2,183 +2,114 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "auth-service-7x5q.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5119
         }
       ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/products/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "product-service-qxia.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5212
         }
       ],
       "UpstreamPathTemplate": "/api/products/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/warehouses/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "warehouse-service-f2au.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5019
         }
       ],
       "UpstreamPathTemplate": "/api/warehouses/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/stock/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "warehouse-service-f2au.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5019
         }
       ],
       "UpstreamPathTemplate": "/api/stock/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/suppliers/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "supplier-service-316x.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5230
         }
       ],
       "UpstreamPathTemplate": "/api/suppliers/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/purchase-orders/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "purchase-order-service.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5189
         }
       ],
       "UpstreamPathTemplate": "/api/purchase-orders/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/movements/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "movement-service.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5121
         }
       ],
       "UpstreamPathTemplate": "/api/movements/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/alerts/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "alert-service-x1vl.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5245
         }
       ],
       "UpstreamPathTemplate": "/api/alerts/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     },
     {
       "DownstreamPathTemplate": "/api/reports/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "report-service-w2ue.onrender.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5144
         }
       ],
       "UpstreamPathTemplate": "/api/reports/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "HttpHandlerOptions": {
-        "AllowAutoRedirect": false,
-        "UseCookieContainer": false,
-        "UseTracing": false
-      },
-      "DownstreamHttpVersion": "1.1",
-      "Timeout": 90000
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://stockpro-gateway.onrender.com",
-    "RequestIdKey": "OcRequestId",
-    "HttpHandlerOptions": {
-      "AllowAutoRedirect": false,
-      "UseCookieContainer": false,
-      "UseTracing": false
-    }
+    "BaseUrl": "http://localhost:5000"
   }
 }

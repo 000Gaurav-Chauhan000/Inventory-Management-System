@@ -48,7 +48,7 @@ builder.Services.AddSwaggerGen(options =>
 
 // DB
 builder.Services.AddDbContext<WarehouseDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // DI
 builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
@@ -84,7 +84,6 @@ builder.Services.AddAuthentication("Bearer")
 });
 
 var app = builder.Build();
-
 app.UseCors("AllowReact");
 
 app.UseSwagger();
