@@ -1,6 +1,0 @@
-@MovementService_HostAddress = http://localhost:5220
-
-GET {{MovementService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
