@@ -15,7 +15,7 @@ services:
         value: http://+:8080
 
   # Auth Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: auth-service
     env: docker
     dockerContext: StockPro
@@ -33,7 +33,7 @@ services:
         value: http://+:8080
 
   # Product Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: product-service
     env: docker
     dockerContext: StockPro
@@ -45,7 +45,7 @@ services:
         value: http://+:8080
 
   # Warehouse Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: warehouse-service
     env: docker
     dockerContext: StockPro
@@ -57,7 +57,7 @@ services:
         value: http://+:8080
 
   # Supplier Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: supplier-service
     env: docker
     dockerContext: StockPro
@@ -69,7 +69,7 @@ services:
         value: http://+:8080
 
   # Purchase Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: purchase-service
     env: docker
     dockerContext: StockPro
@@ -81,7 +81,7 @@ services:
         value: http://+:8080
 
   # Stock Movement Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: movement-service
     env: docker
     dockerContext: StockPro
@@ -93,7 +93,7 @@ services:
         value: http://+:8080
 
   # Alert Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: alert-service
     env: docker
     dockerContext: StockPro
@@ -105,7 +105,7 @@ services:
         value: http://+:8080
 
   # Report Service (Internal only)
-  - type: pservice
+  - type: pserv
     name: report-service
     env: docker
     dockerContext: StockPro
