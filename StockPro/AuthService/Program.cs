@@ -2,6 +2,8 @@ using AuthService.Data;
 using AuthService.Repositories;
 using AuthService.Services;
 using Microsoft.EntityFrameworkCore;
+
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -9,7 +11,9 @@ using AuthService.Middleware;
  using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Controllers
 builder.Services.AddControllers();
@@ -62,16 +66,20 @@ builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var key = builder.Configuration["Jwt:Key"] ?? throw new Exception("JWT Key not found");
+        var key = builder.Configuration["Jwt:Key"] 
+                  ?? throw new Exception("JWT Key not found");
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(key))
         };
     });
 
@@ -84,6 +92,18 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Auth DB migration skipped: {ex.Message}");
+    }
+}
 app.UseCors("AllowReact");
 
 app.UseSwagger();

@@ -12,7 +12,7 @@ using ProductService.Data;
 namespace ProductService.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    [Migration("20260511105011_InitialCreate")]
+    [Migration("20260514082142_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,8 +20,7 @@ namespace ProductService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("product")
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -87,7 +86,7 @@ namespace ProductService.Migrations
                     b.HasIndex("Sku")
                         .IsUnique();
 
-                    b.ToTable("Products", "product");
+                    b.ToTable("Products");
                 });
 #pragma warning restore 612, 618
         }

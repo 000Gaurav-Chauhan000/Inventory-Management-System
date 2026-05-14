@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+
+
 using ProductService.Data;
 using ProductService.Repositories;
 using ProductService.Services;
@@ -9,7 +11,9 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Security.Claims;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
+
 
 builder.Services.AddControllers();
 
@@ -92,12 +96,25 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ProductDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Product DB migration skipped: {ex.Message}");
+    }
+}
 app.UseCors("AllowReact");
 
-
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
-
+}
 
 app.UseHttpsRedirection();
 

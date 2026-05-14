@@ -14,7 +14,6 @@ public class AuthDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasDefaultSchema("auth");
         base.OnModelCreating(modelBuilder);
 
         var user = modelBuilder.Entity<AppUser>();

@@ -11,12 +11,8 @@ namespace ProductService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "product");
-
             migrationBuilder.CreateTable(
                 name: "Products",
-                schema: "product",
                 columns: table => new
                 {
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -42,7 +38,6 @@ namespace ProductService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_Sku",
-                schema: "product",
                 table: "Products",
                 column: "Sku",
                 unique: true);
@@ -52,8 +47,7 @@ namespace ProductService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Products",
-                schema: "product");
+                name: "Products");
         }
     }
 }

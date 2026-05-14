@@ -1,0 +1,117 @@
+services:
+  # Api Gateway (Publicly accessible)
+  - type: web
+    name: api-gateway
+    env: docker
+    dockerContext: .
+    dockerfilePath: ApiGateway/Dockerfile
+    plan: free # Change to a higher plan if needed
+    envVars:
+      - key: RENDER
+        value: "true"
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Auth Service (Internal only)
+  - type: pservice
+    name: auth-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: AuthService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false # User should set this in Render UI
+      - key: Jwt__Key
+        sync: false
+      - key: Jwt__Issuer
+        value: StockPro
+      - key: Jwt__Audience
+        value: StockProUsers
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Product Service (Internal only)
+  - type: pservice
+    name: product-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: ProductService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Warehouse Service (Internal only)
+  - type: pservice
+    name: warehouse-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: WarehouseService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Supplier Service (Internal only)
+  - type: pservice
+    name: supplier-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: SupplierService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Purchase Service (Internal only)
+  - type: pservice
+    name: purchase-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: PurchaseOrderService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Stock Movement Service (Internal only)
+  - type: pservice
+    name: movement-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: StockMovementService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Alert Service (Internal only)
+  - type: pservice
+    name: alert-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: AlertService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+
+  # Report Service (Internal only)
+  - type: pservice
+    name: report-service
+    env: docker
+    dockerContext: .
+    dockerfilePath: ReportService/Dockerfile
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
