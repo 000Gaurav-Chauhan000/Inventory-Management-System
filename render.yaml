@@ -3,7 +3,7 @@ services:
   - type: web
     name: api-gateway
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: ApiGateway/Dockerfile
     plan: free # Change to a higher plan if needed
     envVars:
@@ -18,7 +18,7 @@ services:
   - type: pservice
     name: auth-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: AuthService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -36,7 +36,7 @@ services:
   - type: pservice
     name: product-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: ProductService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -48,7 +48,7 @@ services:
   - type: pservice
     name: warehouse-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: WarehouseService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -60,7 +60,7 @@ services:
   - type: pservice
     name: supplier-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: SupplierService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -72,7 +72,7 @@ services:
   - type: pservice
     name: purchase-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: PurchaseOrderService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -84,7 +84,7 @@ services:
   - type: pservice
     name: movement-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: StockMovementService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -96,7 +96,7 @@ services:
   - type: pservice
     name: alert-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: AlertService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
@@ -108,7 +108,7 @@ services:
   - type: pservice
     name: report-service
     env: docker
-    dockerContext: .
+    dockerContext: StockPro
     dockerfilePath: ReportService/Dockerfile
     envVars:
       - key: ConnectionStrings__DefaultConnection
