@@ -5,7 +5,7 @@ services:
     env: docker
     dockerContext: StockPro
     dockerfilePath: ApiGateway/Dockerfile
-    plan: free # Change to a higher plan if needed
+    plan: free
     envVars:
       - key: RENDER
         value: "true"
@@ -14,12 +14,13 @@ services:
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Auth Service (Internal only)
-  - type: pserv
+  # Auth Service (Converted to web for free tier)
+  - type: web
     name: auth-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: AuthService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false # User should set this in Render UI
@@ -32,84 +33,91 @@ services:
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Product Service (Internal only)
-  - type: pserv
+  # Product Service (Converted to web for free tier)
+  - type: web
     name: product-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: ProductService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Warehouse Service (Internal only)
-  - type: pserv
+  # Warehouse Service (Converted to web for free tier)
+  - type: web
     name: warehouse-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: WarehouseService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Supplier Service (Internal only)
-  - type: pserv
+  # Supplier Service (Converted to web for free tier)
+  - type: web
     name: supplier-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: SupplierService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Purchase Service (Internal only)
-  - type: pserv
+  # Purchase Service (Converted to web for free tier)
+  - type: web
     name: purchase-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: PurchaseOrderService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Stock Movement Service (Internal only)
-  - type: pserv
+  # Stock Movement Service (Converted to web for free tier)
+  - type: web
     name: movement-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: StockMovementService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Alert Service (Internal only)
-  - type: pserv
+  # Alert Service (Converted to web for free tier)
+  - type: web
     name: alert-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: AlertService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
       - key: ASPNETCORE_URLS
         value: http://+:8080
 
-  # Report Service (Internal only)
-  - type: pserv
+  # Report Service (Converted to web for free tier)
+  - type: web
     name: report-service
     env: docker
     dockerContext: StockPro
     dockerfilePath: ReportService/Dockerfile
+    plan: free
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
